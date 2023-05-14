@@ -1,4 +1,4 @@
-# Email sender to multiple recipients with Gmail API
+# One Email Multiple Recipient with Gmail
 
 This script allows you to send a single email to multiple recipients using the Gmail API. It reads the necessary information from text files and verifies the validity of the email addresses and content before sending the email.
 
