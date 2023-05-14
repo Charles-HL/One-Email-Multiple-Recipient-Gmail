@@ -95,6 +95,8 @@ if __name__ == '__main__':
     for email in recipient_emails:
         if not is_valid_email(email):
             raise Exception(f"Invalid email: {email}")
+    # Remove duplicate emails
+    recipient_emails = list(set(recipient_emails))
 
     # Read email subject from a text file and check its length and validity
     with open('email-info/email_subject.txt', 'r') as file:
