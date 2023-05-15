@@ -38,10 +38,25 @@ def send_message(message):
         print(f"An error occurred while sending the email: {error}")
 
 def send_emails(sender, recipients, subject, message_text):
+    if not os.path.exists('output'):
+        os.makedirs('output')
+    # write the file of recipients to be sent to a file
+    with open('output/recipient_emails_to_send.txt', 'w') as file:
+        file.writelines(recipients)
     for recipient in recipients:
         message = create_message(sender, recipient, subject, message_text)
         print(f"Sending email to {recipient}...")
         send_message(message)
+        # Add the email to the file of emails sent
+        with open('output/recipient_emails_sent.txt', 'a') as file:
+            file.write(f"{recipient}\n")
+        # Remove from the file of emails to be sent
+        with open('output/recipient_emails_to_send.txt', 'r') as file:
+            lines = file.readlines()
+        with open('output/recipient_emails_to_send.txt', 'w') as file:
+            for line in lines:
+                if line.strip() != recipient:
+                    file.write(line)
         if recipient != recipients[-1]:
             print(f"Waiting {TIME_BETWEEN_EMAILS_IN_S} seconds before sending the next email...")
             time.sleep(TIME_BETWEEN_EMAILS_IN_S)
